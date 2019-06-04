@@ -1,0 +1,87 @@
+
+# Server installation instructions
+
+1. Install python3, setuptools and pip3
+
+        sudo apt-get install python3 libcurl4-openssl-dev libssl-dev
+        sudo python3 -m pip install pip --upgrade
+        sudo python3 -m pip install pipenv
+        pipenv install
+
+
+1. Create your server certificate:
+
+        cd ~/.ssh
+        ssh-keygen -t rsa -b 2048
+        mv id_rsa server.key.pem
+        openssl req -new -key server.key.pem -out server.csr
+        openssl x509 -req -days 3650 -in server.csr -signkey server.key.pem -out server.crt.pem
+
+1. Change your server.ini file accordingly.
+
+1. Setup your passwd.txt, add allowed users. See file format below.
+
+Please note that passwd.txt file is parsed on-the-fly. You can edit your passwd file while the server is
+running. Effective immediately.
+
+
+1. Start your server:
+
+        pipenv run python server.py
+
+
+
+# Password file format
+
+The passwd.txt file should be a simple textual file, encoded in UTF-8. Each line should have this structure:
+
+
+    username:homedir:permissions:password
+
+Username is identifier-like, must match this regexp:
+
+    [a-z][a-z0-9]*
+
+The home directory is always relative to the backup directory.
+You can use an empty string to place the home dir of the user into
+the backup dir. A user will see his home directory as the "root" of
+the server. By placing home directories of different users into each
+other, you can manage some kind or hierarchical permission control.
+
+The permissions part is a string with these possible charaters inside:
+
+*  W - The client can write files on the server: create, upload.
+*  D - The client can delete files and directories on the server.
+*  R - The client can read files from the server.
+*  S - The client can sync files. It means that the server will list
+       directory contents, and will send file size and modification
+       time information.
+
+       Please note that W,D,R permissions don't allow listings of
+       existing directories and files! So if you have R permission
+       then you can read file data from the server, but you have to
+       know the exact relative path of the file to read it.
+*  T - The client can get the UTC time on the server. This is for
+       special uses.
+*   N - The client can request poll notifications from the server.
+*   A - Administrator rights - the client can list/create/edit users
+        and groups.
+
+Some useful combinations:
+
+* W   - Can create new directories and upload new files, but only if
+        they don't exist on the server yet.
+* D   - Can delete directories or files.
+* WD  - Can create or delete directories, upload new files, overwrite
+        existing files and delete files.
+* R   - Can download file data.
+* S   - Can list directories and files on the server, can get file
+        size and modification time.
+* WDS - The client can do asymmetric synchronization to the server.
+        E.g. the server dir will be modified to match the client.
+* RS  - The client can do asymmetric synchronization from the server.
+        E.g. the client dir will be modified to match the server.
+* RWDS- The client can do symmetric synchronization: perform two
+        asymmetric synchronizations in both directions.
+
+Synchronization also uses extra options to decide which files should be copied.

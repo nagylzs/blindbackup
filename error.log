@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/gandalf/projects/blindbackup/scripts/server.py", line 450, in post
+    user = self.securitymanager.get_user(login)
+  File "/home/gandalf/projects/blindbackup/scripts/server.py", line 94, in get_user
+    users = self.get_users()
+  File "/home/gandalf/projects/blindbackup/scripts/server.py", line 90, in get_users
+    self._load_all()
+  File "/home/gandalf/projects/blindbackup/scripts/server.py", line 103, in _load_all
+    mtime = os.stat(self.config["passwdfile"]).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: 'passwd.txt'
+Traceback (most recent call last):
+  File "/home/gandalf/projects/blindbackup/scripts/server.py", line 530, in post
+    fsource = parts[0]["tmpfile"]
+TypeError: 'TemporaryFileStreamedPart' object is not subscriptable
