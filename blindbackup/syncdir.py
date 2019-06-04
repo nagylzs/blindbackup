@@ -72,6 +72,11 @@ class FsProvider:
         """Name of the FsProvider."""
         raise NotImplementedError
 
+    @classmethod
+    def _prefixed(cls, relpath, items):
+        """Add prefix to items."""
+        return [relpath + [item] for item in list(items)]
+
     def get_uid(self):
         """Get unique identifier for the FsProvider.
 
@@ -129,7 +134,7 @@ class FsProvider:
         Should only use it on a clone."""
         raise NotImplementedError
 
-    def get_event_relpath(self, eventPath):
+    def get_event_relpath(self, event_path):
         """Convert the full path of an event into a path relative to this provider.
 
         @return: a list of path items"""

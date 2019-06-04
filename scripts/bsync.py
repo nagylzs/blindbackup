@@ -27,7 +27,7 @@ def parse_location(loc, can_create, parser, need_pwd):
 
     Return a pair of (fsprovider, settings).
     """
-    DEFAULT_LOCALSETTING = dict(server_url=None, encryptionkey=None, tmpdir=None, driver=None)
+    DEFAULT_LOCALSETTING = dict(server_url=None, encryptionkey=None, tmp_dir=None, driver=None)
     pat = r"([a-zA-Z][0-9a-zA-Z\_\-]*)://(.*)"
     res = re.match(pat, loc)
     if DEBUG:
@@ -43,32 +43,14 @@ def parse_location(loc, can_create, parser, need_pwd):
     else:
         settings = DEFAULT_LOCALSETTING
         path = loc
-    if settings["server_url"]:
-        if DEBUG:
-            print("    server_url=", repr(settings["server_url"]))
-        c = create_client(settings)
-        if path:
-            root = path.split("/")
-        else:
-            root = []
-        provider_name = settings.get("provider", "blindfs")
-        provider = get_provider_class(provider_name)(c, root, settings.get("tmpdir", None))
 
-        if not c.directory_exists(path):
-            if can_create:
-                c("mkdir", relpath=path)
-                # else:
-                #    parser.error("Remote path does not exist: %s" % loc)
+    if settings["server_url"]:
+        default_provider = "blindfs"
     else:
-        if DEBUG:
-            print("    server_url=", "<Not given>")
-            print("    trying direct path %s" % path)
-        if not os.path.isdir(path):
-            if can_create:
-                os.mkdir(path)
-            else:
-                parser.error("Not a directory: %s" % path)
-        provider = get_provider_class("local")(path)
+        default_provider = "localfs"
+
+    provider_name = settings.get("provider", default_provider)
+    provider = get_provider_class(provider_name)(path, can_create, settings)
     return provider, settings
 
 

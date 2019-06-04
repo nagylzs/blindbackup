@@ -15,6 +15,9 @@ termcolor = "*"
 psutil = "*"
 cffi = "*"
 argon2-cffi = "*"
+requests = "*"
+dateutil = "*"
+python-dateutil = "*"
 
 [requires]
 python_version = "3.6"

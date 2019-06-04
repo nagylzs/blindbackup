@@ -106,25 +106,32 @@ class LocalFsProvider(FsProvider):
 
     @classmethod
     def get_name(cls):
-        return "local"
+        return "localfs"
 
-    def __init__(self, root):
+    def __init__(self, root, can_create: bool, settings: dict):
         """Local filesystem provider.
 
         @param root: A local path of a directory that will be the root
             for sync operations. Must be an existing directory.
 
         """
+        if not os.path.isdir(root):
+            if can_create:
+                os.mkdir(root)
+            else:
+                raise ValueError("Not a directory: %s" % root)
+
         self.root = os.path.abspath(root)
+        self.settings = settings
         # Set this flag to tell that file data in a change is not a file
         # path but the file data itself.
         self.file_data_in_change = False
         self._ignored = {}
         self.ignore_ttl = 1.0  # Ignore fs changes for items that has just been updated by the provider for this amount of time.
-        FsProvider.__init__(self)
+        super().__init__()
 
     def clone(self):
-        res = LocalFsProvider(self.root)
+        res = LocalFsProvider(self.root, False, self.settings)
         res.uid = self.get_uid()
         return res
 
@@ -135,12 +142,12 @@ class LocalFsProvider(FsProvider):
         assert (isinstance(relpath, list))
         self.root = os.path.join(self.root, os.sep.join(relpath))
 
-    def get_event_relpath(self, eventPath):
+    def get_event_relpath(self, event_path):
         """Convert the full path of an event into a path relative to this provider.
 
         @return: a list of path items"""
-        assert (eventPath.startswith(self.root))
-        return eventPath[len(self.root) + len(os.sep):].split(os.sep)
+        assert (event_path.startswith(self.root))
+        return event_path[len(self.root) + len(os.sep):].split(os.sep)
 
     def __str__(self):
         return "%s(%s)" % (self.__class__.__name__, repr(self.root))
@@ -158,11 +165,6 @@ class LocalFsProvider(FsProvider):
     def remove(self, relpath):
         """Use this to remove by a relpath."""
         self._remove(self.get_localpath(relpath))
-
-    @classmethod
-    def _prefixed(cls, relpath, items):
-        """Add prefix to items."""
-        return [relpath + [item] for item in list(items)]
 
     def iscasesensitive(self):
         # TODO: is there a more general way to identify?

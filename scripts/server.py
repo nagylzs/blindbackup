@@ -34,7 +34,7 @@ class AbortRequest(Exception):
         self.msg = msg
 
 
-def _checksafepath(fname):
+def _check_safe_path(fname):
     """Check if the given path is safe.
 
     @param fname: relative path
@@ -50,12 +50,8 @@ def _checksafepath(fname):
     if isinstance(fname, list):
         fname = "/".join(fname)
     fname = fname.replace("/", os.sep).replace("..", os.pardir)
-    if (os.pardir in fname) or \
-            '..' in fname or \
-            '?' in fname or \
-            '*' in fname or \
-            fname.startswith(os.sep) or \
-            fname.startswith(os.curdir + os.sep):
+    if (os.pardir in fname) or '..' in fname or '?' in fname or '*' in fname or \
+            fname.startswith(os.sep) or fname.startswith(os.curdir + os.sep):
         raise AbortRequest(400, "Invalid filename.")
     return fname
 
@@ -141,19 +137,11 @@ class SecurityManager(object):
     def _dump_users(self):
         fpath = self.config["passwdfile"]
         print("Saving users to %s" % fpath)
-        usernames = sorted(self._users.keys())
+        user_names = sorted(self._users.keys())
         with open(fpath + ".part", "w+") as fout:
-            for username in usernames:
+            for username in user_names:
                 user = self._users[username]
-                # print("???",self._passwords)
-                # print("???",self._passwords[username])
-                line = "%s:%s:%s:%s" % (
-                    username,
-                    user["prefix"],
-                    user["perms"],
-                    self._passwords[username]
-                )
-                # print(repr(line))
+                line = "%s:%s:%s:%s" % (username, user["prefix"], user["perms"], self._passwords[username])
                 fout.write(line + "\n")
         bakfile = fpath + ".bak"
         if os.path.isfile(bakfile):
@@ -191,9 +179,7 @@ class SecurityManager(object):
         login = login.strip().lower()
         prefix = prefix.strip()
         login_ok = re.match("[a-z][a-z0-9]*", login)
-        prefix_ok = not prefix or re.match(
-            "[a-z][a-z0-9]*(/[a-z][a-z0-9]*)*", prefix) and \
-                    not prefix.endswith("/")
+        prefix_ok = not prefix or re.match("[a-z][a-z0-9]*(/[a-z][a-z0-9]*)*", prefix) and not prefix.endswith("/")
         if not login_ok:
             raise AbortRequest(400, "Invalid login name '%s'" % login)
         if not prefix_ok:
@@ -259,7 +245,7 @@ class EventListener(object):
         self.ttl = ttl
         self._listeners = {}
 
-    def addObserver(self, root):
+    def add_observer(self, root):
         assert (isinstance(root, str))
         uid = str(uuid.uuid4())
         self._listeners[uid] = {
@@ -269,24 +255,24 @@ class EventListener(object):
         }
         return uid
 
-    def notify(self, eventRoot, eventType, eventUid):
-        print("notify eventRoot=%s eventType=%s eventUid=%s" % (eventRoot, eventType, eventUid))
+    def notify(self, event_root, event_type, event_uid):
+        print("notify eventRoot=%s eventType=%s eventUid=%s" % (event_root, event_type, event_uid))
         to_delete = []
         now = time.time()
         for uid in self._listeners:
             rec = self._listeners[uid]
-            print("", "rec", rec, eventRoot.startswith(rec["root"]))
+            print("", "rec", rec, event_root.startswith(rec["root"]))
             # Auto remove expired listeners.
             if rec["expires"] < now:
                 to_delete.append(uid)
                 print("Expired %s" % uid)
-            elif eventRoot.startswith(rec["root"]):
-                print("Adding event %s to %s" % (eventRoot, uid))
-                rec["events"].append((eventRoot, eventType, eventUid))
+            elif event_root.startswith(rec["root"]):
+                print("Adding event %s to %s" % (event_root, uid))
+                rec["events"].append((event_root, event_type, event_uid))
         for uid in to_delete:
             del self._listeners[uid]
 
-    def getEvents(self, uid):
+    def get_events(self, uid):
         if not uid in self._listeners:
             raise AbortRequest(404, "Invalid event notification request.")
         rec = self._listeners[uid]
@@ -307,14 +293,18 @@ class EventListener(object):
 
 @tornado.web.stream_request_body
 class MainHandler(tornado.web.RequestHandler):
+    poll_granularity: float
+    poll_ttl: float
+    security_manager: SecurityManager
+    event_listener: EventListener
+
     @classmethod
-    def initHandler(cls, config):
+    def init_handler(cls, config):
         cls.poll_granularity = 0.1
         cls.poll_ttl = 1.0
-
         cls.config = config
-        cls.securitymanager = SecurityManager(config)
-        cls.eventlistener = EventListener(config, cls.poll_ttl)
+        cls.security_manager = SecurityManager(config)
+        cls.event_listener = EventListener(config, cls.poll_ttl)
 
     def get(self):
         self.set_header("Content-Type", "text/plain")
@@ -325,15 +315,15 @@ class MainHandler(tornado.web.RequestHandler):
         if self.request.method.lower() == "post":
             self.request.connection.set_max_body_size(int(self.config.get("max_file_size", MAX_FILE_SIZE_DEFAULT)))
         if self.config:
-            tmpdir = self.config.get("tmpdir", None)
+            tmp_dir = self.config.get("tmp_dir", None)
         else:
-            tmpdir = None
+            tmp_dir = None
         # TODO: get content length here?
         try:
             total = int(self.request.headers.get("Content-Length", "0"))
         except:
             total = 0
-        self.ps = MultiPartStreamer(total, tmpdir)
+        self.ps = MultiPartStreamer(total, tmp_dir)
 
     def data_received(self, chunk):
         self.ps.data_received(chunk)
@@ -359,7 +349,7 @@ class MainHandler(tornado.web.RequestHandler):
         """
         if not os.path.isdir(homedir):
             os.makedirs(homedir, exist_ok=True)
-        return os.path.join(homedir, _checksafepath(fname))
+        return os.path.join(homedir, _check_safe_path(fname))
 
     @classmethod
     def _remove(cls, localpath):
@@ -383,7 +373,7 @@ class MainHandler(tornado.web.RequestHandler):
                 cnt += 1
                 # Now we know that it is a file.
                 selpath = part.get_name()
-                _checksafepath(selpath)
+                _check_safe_path(selpath)
                 localpath = self._localpath(homedir, selpath)
                 if os.path.isfile(localpath):
                     if "D" in perms:
@@ -420,8 +410,8 @@ class MainHandler(tornado.web.RequestHandler):
                     self.write(data)
         self.finish()  # Required because all POST requests are asynchronous
 
-    def _pollChanges(self, uid, started):
-        events = self.eventlistener.getEvents(uid)
+    def _poll_changes(self, uid, started):
+        events = self.event_listener.get_events(uid)
         if events:
             self.reply(events)  # Also calls finish(), putting an end to the long poll.
         else:
@@ -430,7 +420,7 @@ class MainHandler(tornado.web.RequestHandler):
                 # Next poll would be more than poll_ttl
                 self.reply([])
             else:
-                fnc = functools.partial(self._pollChanges, uid, started)
+                fnc = functools.partial(self._poll_changes, uid, started)
                 tornado.ioloop.IOLoop.instance().add_timeout(
                     time.time() + self.poll_granularity, fnc)
 
@@ -448,10 +438,10 @@ class MainHandler(tornado.web.RequestHandler):
                     raise AbortRequest(400, "Bad request")
                 login, pwd = params.get("login", None), params.get("pwd", None)
                 action = params.get("action", None)
-                user = self.securitymanager.get_user(login)
+                user = self.security_manager.get_user(login)
                 if not user:
                     raise AbortRequest(403, "Invalid username or password (#1).")
-                if self.securitymanager.check_password(login, pwd):
+                if self.security_manager.check_password(login, pwd):
                     perms = user["perms"]
                     if not perms:
                         raise AbortRequest(403, "Unauthorized to do anything.")
@@ -506,25 +496,25 @@ class MainHandler(tornado.web.RequestHandler):
                     self.reply(LocalFsProvider(homedir).iscasesensitive())
                 elif action == "listdir":
                     checkperm("S")
-                    _checksafepath(params["relpath"])
+                    _check_safe_path(params["relpath"])
                     self.reply(LocalFsProvider(homedir).listdir(
                         params["relpath"]))
                 elif action == "getinfo":
                     checkperm("S")
-                    _checksafepath(params["root"])
+                    _check_safe_path(params["root"])
                     root = os.path.join(homedir, params["root"])
                     self.reply(LocalFsProvider(root).getinfo(
                         params["items"], params["encrypted"]))
                 elif action == "receivechanges":
                     checkperm("DWS")
-                    _checksafepath(params["root"])
+                    _check_safe_path(params["root"])
                     root = os.path.join(homedir, params["root"])
                     uid = params["uid"]
                     fcopy = []
                     for fitem in params["fcopy"]:
                         op, selpath, atime, mtime, fsize, fpath = fitem
-                        _checksafepath(selpath)
-                        #localpath = self._localpath(homedir, selpath)
+                        _check_safe_path(selpath)
+                        # localpath = self._localpath(homedir, selpath)
                         parts = self.ps.get_parts_by_name(selpath)
                         if len(parts) != 1:
                             raise AbortRequest(400, "Bad number of files posted.")
@@ -536,34 +526,34 @@ class MainHandler(tornado.web.RequestHandler):
                     dst = LocalFsProvider(root)
                     # Not anymore!
                     # dst.file_data_in_change = True
-                    [_checksafepath(ditem[1]) for ditem in params["delet"]]
+                    [_check_safe_path(ditem[1]) for ditem in params["delet"]]
                     dst.receivechanges(iter(params["delet"]))
                     for ditem in params["delet"]:
-                        self.eventlistener.notify(
+                        self.event_listener.notify(
                             params["root"] + "/" + ditem[1], ditem[0], uid)
-                    [_checksafepath(ditem[1]) for ditem in params["dcopy"]]
+                    [_check_safe_path(ditem[1]) for ditem in params["dcopy"]]
                     dst.receivechanges(iter(params["dcopy"]))
                     for ditem in params["dcopy"]:
-                        self.eventlistener.notify(
+                        self.event_listener.notify(
                             params["root"] + "/" + ditem[1], ditem[0], uid)
                     dst.receivechanges(iter(fcopy))
                     for fitem in params["fcopy"]:
-                        self.eventlistener.notify(
+                        self.event_listener.notify(
                             params["root"] + "/" + fitem[1], fitem[0], uid)
                     self.reply(0)
 
                 # User management methods
                 elif action == "getusers":
                     checkperm("A")
-                    self.reply(self.securitymanager.get_users())
+                    self.reply(self.security_manager.get_users())
 
                 elif action == "saveuser":
                     checkperm("A")
-                    self.reply(self.securitymanager.save_user(params, login))
+                    self.reply(self.security_manager.save_user(params, login))
 
                 elif action == "deleteuser":
                     checkperm("A")
-                    self.reply(self.securitymanager.delete_user(params, login))
+                    self.reply(self.security_manager.delete_user(params, login))
 
                 # Other special methods
                 elif action == "utcnow":
@@ -574,15 +564,15 @@ class MainHandler(tornado.web.RequestHandler):
 
                 elif action == "listenchanges":
                     checkperm("N")
-                    _checksafepath(params["root"])
+                    _check_safe_path(params["root"])
                     # Do not add homedir here, listenchanges works on paths relative to the homedir!
                     # root = self._localpath(homedir, params["root"])
-                    root = _checksafepath(params["root"])
-                    self.reply(self.eventlistener.addObserver(root))
+                    root = _check_safe_path(params["root"])
+                    self.reply(self.event_listener.add_observer(root))
 
                 elif action == "pollchanges":
                     checkperm("N")
-                    self._pollChanges(params["uid"], time.time())  # This may reply with a list of changes, or wait...
+                    self._poll_changes(params["uid"], time.time())  # This may reply with a list of changes, or wait...
 
                 else:
                     raise AbortRequest(400, "Invalid action.")
@@ -667,7 +657,7 @@ if __name__ == "__main__":
         parser.error("Root directory '%s' not exists." % config["backup_root"])
     # TODO: check keyfile and certfile permissions. Also check if their containing directory is writable.
 
-    MainHandler.initHandler(config)
+    MainHandler.init_handler(config)
 
     application = tornado.web.Application([
         (r"/", MainHandler),

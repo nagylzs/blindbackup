@@ -4,6 +4,7 @@ import threading
 
 from .. import cryptfile
 from ..util import *
+from ..client import create_client
 from ..syncdir import FsProvider, FsListener
 
 
@@ -61,18 +62,41 @@ class BlindFsProvider(FsProvider):
     def get_name(cls):
         return "blindfs"
 
-    def __init__(self, client: "Client", root, tmp_dir):
-        assert (isinstance(root, list))
-        if root and not root[0]:
-            raise Exception("BlindFsProvider: root cannot be [''], it must be []. Hint: use :// instead of :///")
-        self.client = client
+    def __init__(self, path: str, can_create: bool, settings: dict, client=None, root=None):
+        if root is None:
+            # Normal construction
+            if client is None:
+                self.client = create_client(settings)
+            else:
+                self.client = client
+
+            if path:
+                root = path.split("/")
+            else:
+                root = []
+            if root and not root[0]:
+                raise Exception("BlindFsProvider: root cannot be [''], it must be []. Hint: use :// instead of :///")
+
+            if not client.directory_exists(path):
+                if can_create:
+                    client("mkdir", relpath=path)
+                    # else:
+                    #    parser.error("Remote path does not exist: %s" % loc)
+        else:
+            # cloned
+            assert client
+            assert path is None
+            assert root
+            self.client = client
+
         self.root = root
-        self._iscasesensitive = None
-        self.tmpdir = tmp_dir
-        FsProvider.__init__(self)
+        self.settings = settings
+        self._is_case_sensitive = None
+        self.tmp_dir = settings.get("tmp_dir", None)
+        super().__init__()
 
     def clone(self):
-        res = BlindFsProvider(self.client, self.root, self.tmpdir)
+        res = BlindFsProvider(None, False, self.settings, self.client, self.root)
         res.uid = self.get_uid()
         return res
 
@@ -85,26 +109,21 @@ class BlindFsProvider(FsProvider):
         assert (isinstance(relpath, list))
         self.root = self.root + relpath
 
-    def get_event_relpath(self, eventPath):
+    def get_event_relpath(self, event_path):
         """Convert the full path of an event into a path relative to this provider.
 
         @return: a list of path items"""
         myroot = "/".join(self.root)
-        assert (eventPath.startswith(myroot))
-        return eventPath[len(myroot) + 1:].split("/")
-
-    @classmethod
-    def _prefixed(cls, relpath, items):
-        """Add prefix to items."""
-        return [relpath + [item] for item in list(items)]
+        assert (event_path.startswith(myroot))
+        return event_path[len(myroot) + 1:].split("/")
 
     def _remotepath(self, relpath):
         return self.root + relpath
 
     def iscasesensitive(self):
-        if self._iscasesensitive is None:
-            self._iscasesensitive = self.client("iscasesensitive")
-        return self._iscasesensitive
+        if self._is_case_sensitive is None:
+            self._is_case_sensitive = self.client("iscasesensitive")
+        return self._is_case_sensitive
 
     def listdir(self, relpath):
         # print("listdir",relpath,self._remotepath(relpath))
@@ -142,7 +161,7 @@ class BlindFsProvider(FsProvider):
             atime, mtime, fsize = infos[idx]
             file_data = self.client.recv_backup(
                 "/".join(self._remotepath(relpath)))
-            localpath = create_tmp_file_for(self.tmpdir)
+            localpath = create_tmp_file_for(self.tmp_dir)
             fout = open(localpath, "wb+")
             try:
                 fout.write(file_data)

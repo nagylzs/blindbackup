@@ -1,6 +1,7 @@
 from ..syncdir import FsProvider
 from .localfs import LocalFsProvider
 from .blindfs import BlindFsProvider
+from .onlyoffice import OnlyOfficeProvider
 
 __PROVIDER_CLASSES = {}
 
@@ -23,3 +24,4 @@ def get_provider_class(provider_name: str):
 
 register_provider_class(LocalFsProvider)
 register_provider_class(BlindFsProvider)
+register_provider_class(OnlyOfficeProvider)
