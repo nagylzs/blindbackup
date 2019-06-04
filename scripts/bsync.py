@@ -6,7 +6,7 @@ import threading
 import time
 
 from blindbackup import cryptfile
-from blindbackup.client import create_client
+from blindbackup.providers import FsProvider
 from blindbackup.syncdir import SyncDir
 from blindbackup.util import *
 from blindbackup.providers import get_provider_class

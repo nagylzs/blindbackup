@@ -155,7 +155,7 @@ class OnlyOfficeProvider(FsProvider):
                 file_id = file["id"]
                 title = file["title"]
                 updated = parse_ts(file["updated"]).timestamp()
-                size = file["contentLength"]
+                size = int(file["pureContentLength"])
                 view_url = file["viewUrl"]
                 path = (*norm_path, title.strip().lower())
                 file_info = FileInfo(file_id, title, updated, size, view_url)
