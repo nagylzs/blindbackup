@@ -593,13 +593,17 @@ class MainHandler(tornado.web.RequestHandler):
             self.reply(str(e))
 
         except AbortRequest as e:
-            with open("server.log", "a", encoding="UTF-8") as flog:
-                traceback.print_exc(file=flog)
+            # TODO: add logging
+            #with open("server.log", "a", encoding="UTF-8") as flog:
+            #    traceback.print_exc(file=flog)
+            traceback.print_exc()
             self.set_status(e.code, e.msg)
             self.reply(e.msg)
         except Exception:
-            with open("error.log", "a", encoding="UTF-8") as flog:
-                traceback.print_exc(file=flog)
+            # TODO: add logging
+            #with open("error.log", "a", encoding="UTF-8") as flog:
+            #    traceback.print_exc(file=flog)
+            traceback.print_exc()
             raise
 
 
