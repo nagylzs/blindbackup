@@ -6,9 +6,10 @@ import threading
 import time
 
 from blindbackup import cryptfile
-from blindbackup.client import BlindFsProvider, create_client
-from blindbackup.syncdir import SyncDir, LocalFsProvider, FsProvider
+from blindbackup.client import create_client
+from blindbackup.syncdir import SyncDir
 from blindbackup.util import *
+from blindbackup.providers import get_provider_class
 
 DEBUG = False
 
@@ -26,11 +27,7 @@ def parse_location(loc, can_create, parser, need_pwd):
 
     Return a pair of (fsprovider, settings).
     """
-    DEFAULT_LOCALSETTING = {
-        "server_url": None,
-        "encryptionkey": None,
-        "tmpdir": None,
-    }
+    DEFAULT_LOCALSETTING = dict(server_url=None, encryptionkey=None, tmpdir=None, driver=None)
     pat = r"([a-zA-Z][0-9a-zA-Z\_\-]*)://(.*)"
     res = re.match(pat, loc)
     if DEBUG:
@@ -41,8 +38,8 @@ def parse_location(loc, can_create, parser, need_pwd):
         else:
             print("    res=", "<no match>")
     if res:
-        cfgsection, path = res.groups()
-        settings = load_settings(args.cfgfile, cfgsection, need_pwd)
+        cfg_section, path = res.groups()
+        settings = load_settings(args.cfgfile, cfg_section, need_pwd)
     else:
         settings = DEFAULT_LOCALSETTING
         path = loc
@@ -54,8 +51,9 @@ def parse_location(loc, can_create, parser, need_pwd):
             root = path.split("/")
         else:
             root = []
-        provider = BlindFsProvider(c, root,
-                                   settings.get("tmpdir", None))
+        provider_name = settings.get("provider", "blindfs")
+        provider = get_provider_class(provider_name)(c, root, settings.get("tmpdir", None))
+
         if not c.directory_exists(path):
             if can_create:
                 c("mkdir", relpath=path)
@@ -70,7 +68,7 @@ def parse_location(loc, can_create, parser, need_pwd):
                 os.mkdir(path)
             else:
                 parser.error("Not a directory: %s" % path)
-        provider = LocalFsProvider(path)
+        provider = get_provider_class("local")(path)
     return provider, settings
 
 
@@ -204,7 +202,7 @@ For dropbox-like synchronization, you need to:
 * Use '--bg-src-to-dst d --bg-dst-to-src d' to auto start syncing when something has changed
 * Use '--background-ttl 300' to do a full sync in every 5 minutes
 
-Please note that the synchronization method is somewhat different from dropbox. There are no file journals used.
+Please note that the synchronization method is somewhat different from DropBox. No file journals are used.
 Most operations (especially deletions) are synced correctly ONLY if you are running auto sync features in both
 directions. If you create files in the local folder while the auto sync is not running, then they will probably
 be lost. Also if you delete files in the local folder while the auto sync is not running, then they will probably
@@ -323,7 +321,7 @@ be restored.
         parser.error("Invalid value for --cmp-size")
 
     if options["stcompare"] == SyncDir.CMP_IGNORE and \
-                    options["mtcompare"] == SyncDir.CMP_IGNORE:
+            options["mtcompare"] == SyncDir.CMP_IGNORE:
         parser.error("Cannot ignore both mtime and fsize.")
 
     mode = args.mode.strip().lower()

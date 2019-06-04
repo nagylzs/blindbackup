@@ -20,7 +20,8 @@ import tornado.web
 
 from blindbackup import util
 from tornadostreamform.multipart_streamer import MultiPartStreamer
-from blindbackup.syncdir import LocalFsProvider, EInvalidPath
+from blindbackup.providers.localfs import LocalFsProvider
+from blindbackup.syncdir import EInvalidPath
 from blindbackup.util import localpath
 
 VALID_PERMCODES = u"WDRSTAN"
@@ -523,7 +524,7 @@ class MainHandler(tornado.web.RequestHandler):
                     for fitem in params["fcopy"]:
                         op, selpath, atime, mtime, fsize, fpath = fitem
                         _checksafepath(selpath)
-                        localpath = self._localpath(homedir, selpath)
+                        #localpath = self._localpath(homedir, selpath)
                         parts = self.ps.get_parts_by_name(selpath)
                         if len(parts) != 1:
                             raise AbortRequest(400, "Bad number of files posted.")
@@ -594,14 +595,14 @@ class MainHandler(tornado.web.RequestHandler):
 
         except AbortRequest as e:
             # TODO: add logging
-            #with open("server.log", "a", encoding="UTF-8") as flog:
+            # with open("server.log", "a", encoding="UTF-8") as flog:
             #    traceback.print_exc(file=flog)
             traceback.print_exc()
             self.set_status(e.code, e.msg)
             self.reply(e.msg)
         except Exception:
             # TODO: add logging
-            #with open("error.log", "a", encoding="UTF-8") as flog:
+            # with open("error.log", "a", encoding="UTF-8") as flog:
             #    traceback.print_exc(file=flog)
             traceback.print_exc()
             raise
@@ -663,9 +664,7 @@ if __name__ == "__main__":
     config = util.load_settings(
         args.cfgfile, args.cfgsection, False)
     if not os.path.isdir(config["backup_root"]):
-        parser.error(
-            "Root directory '%s' not exists." %
-            config["backup_root"])
+        parser.error("Root directory '%s' not exists." % config["backup_root"])
     # TODO: check keyfile and certfile permissions. Also check if their containing directory is writable.
 
     MainHandler.initHandler(config)
@@ -683,10 +682,8 @@ if __name__ == "__main__":
         max_body_size = 10 * 1024 ** 2
     http_server = tornado.httpserver.HTTPServer(
         application,
-        ssl_options={
-            "certfile": localpath(config, "ssl_certfile", None),
-            "keyfile": localpath(config, "ssl_keyfile", None),
-        },
+        ssl_options=dict(certfile=localpath(config, "ssl_certfile", None),
+                         keyfile=localpath(config, "ssl_keyfile", None)),
         max_buffer_size=max_buffer_size,
         max_body_size=max_body_size,
     )

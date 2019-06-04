@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/home/gandalf/projects/blindbackup/scripts/server.py", line 490, in post
-    checkperm("S", "File listing not allowed")
-  File "/home/gandalf/projects/blindbackup/scripts/server.py", line 465, in checkperm
-    raise AbortRequest(403, msg)
-AbortRequest: (403, 'File listing not allowed')
