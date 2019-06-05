@@ -4,18 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/../tornadostreamform/tornadostreamform/version.py" line="0" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc79b50f-d5ef-46ab-8bc7-e7a0164d705c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/blindbackup/providers/onlyoffice.py" afterDir="false" />
+    <list default="true" id="fc79b50f-d5ef-46ab-8bc7-e7a0164d705c" name="Default Changelist" comment="Need to add logging">
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blindbackup/providers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/blindbackup/providers/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blindbackup/providers/blindfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/blindbackup/providers/blindfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blindbackup/providers/localfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/blindbackup/providers/localfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blindbackup/syncdir.py" beforeDir="false" afterPath="$PROJECT_DIR$/blindbackup/syncdir.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bsync.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bsync.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,12 +15,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/bsync.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="29" column="73" selection-start-line="29" selection-start-column="73" selection-end-line="29" selection-end-column="73" />
+            <state relative-caret-position="668">
+              <caret line="415" column="39" selection-start-line="415" selection-start-column="39" selection-end-line="415" selection-end-column="39" />
               <folding>
                 <element signature="e#23#38#0" expanded="true" />
               </folding>
@@ -38,21 +29,9 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/blindbackup/client.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="611">
-              <caret line="149" column="19" lean-forward="true" selection-start-line="149" selection-start-column="19" selection-end-line="149" selection-end-column="19" />
-              <folding>
-                <element signature="e#23#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blindbackup/providers/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
+            <state relative-caret-position="342">
               <caret line="21" selection-start-line="21" selection-end-line="21" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
@@ -76,7 +55,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blindbackup/util.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
+            <state relative-caret-position="779">
               <caret line="47" column="23" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="23" />
             </state>
           </provider>
@@ -85,32 +64,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blindbackup/syncdir.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="415" selection-start-line="415" selection-end-line="415" />
+            <state relative-caret-position="668">
+              <caret line="317" column="6" selection-start-line="317" selection-start-column="6" selection-end-line="317" selection-end-column="6" />
               <folding>
                 <element signature="e#23#34#0" expanded="true" />
-                <element signature="e#23785#24611#0" />
-                <element signature="e#24106#24174#0" />
-                <element signature="e#24281#24350#0" />
-                <element signature="e#24617#24668#0" />
-                <element signature="e#24880#26452#1" />
-                <element signature="e#26685#26771#0" />
-                <element signature="e#26803#26942#0" />
-                <element signature="e#26974#27113#0" />
-                <element signature="e#27338#28197#1" />
-                <element signature="e#28936#29020#0" />
-                <element signature="e#29086#30289#0" />
-                <element signature="e#29086#29424#1" />
-                <element signature="e#29488#29618#0" />
-                <element signature="e#29538#29618#0" />
-                <element signature="e#29686#29821#0" />
-                <element signature="e#29741#29821#0" />
-                <element signature="e#29889#30013#0" />
-                <element signature="e#29933#30013#0" />
-                <element signature="e#30083#30208#0" />
-                <element signature="e#30128#30208#0" />
-                <element signature="e#30394#30440#0" />
-                <element signature="e#31823#31881#0" />
               </folding>
             </state>
           </provider>
@@ -125,14 +82,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blindbackup/providers/localfs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="817">
-              <caret line="322" column="61" lean-forward="true" selection-start-line="322" selection-start-column="61" selection-end-line="322" selection-end-column="61" />
+            <state relative-caret-position="4560">
+              <caret line="251" column="32" selection-start-line="251" selection-start-column="32" selection-end-line="251" selection-end-column="32" />
               <folding>
                 <element signature="e#23#37#0" expanded="true" />
-                <element signature="e#83#2969#0" />
               </folding>
             </state>
           </provider>
@@ -141,8 +97,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blindbackup/providers/onlyoffice.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1026">
-              <caret line="266" selection-start-line="266" selection-end-line="266" />
+            <state relative-caret-position="532">
+              <caret line="160" lean-forward="true" selection-start-line="160" selection-end-line="160" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -150,11 +106,20 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Pipfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="319" column="26" lean-forward="true" selection-start-line="319" selection-start-column="26" selection-end-line="319" selection-end-column="26" />
+            <state relative-caret-position="5624">
+              <caret line="319" column="26" selection-start-line="319" selection-start-column="26" selection-end-line="319" selection-end-column="26" />
               <folding>
                 <element signature="e#23#38#0" expanded="true" />
               </folding>
@@ -195,6 +160,11 @@
       <find>__init</find>
       <find>create_tmp_file_for</find>
       <find>tmpdir</find>
+      <find>size</find>
+      <find>requests.</find>
+      <find>dnames</find>
+      <find>debug</find>
+      <find>.clone</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -204,7 +174,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/INSTALL.txt" />
-        <option value="$PROJECT_DIR$/Pipfile" />
         <option value="$PROJECT_DIR$/blindbackup/post_streamer.py" />
         <option value="$PROJECT_DIR$/tests/client.ini" />
         <option value="$PROJECT_DIR$/passwd.txt" />
@@ -220,17 +189,18 @@
         <option value="$PROJECT_DIR$/blindbackup/providers/__init__.py" />
         <option value="$PROJECT_DIR$/blindbackup/syncdir.py" />
         <option value="$PROJECT_DIR$/blindbackup/providers/blindfs.py" />
-        <option value="$PROJECT_DIR$/blindbackup/providers/onlyoffice.py" />
-        <option value="$PROJECT_DIR$/scripts/bsync.py" />
         <option value="$PROJECT_DIR$/scripts/server.py" />
         <option value="$PROJECT_DIR$/blindbackup/providers/localfs.py" />
+        <option value="$PROJECT_DIR$/scripts/bsync.py" />
+        <option value="$PROJECT_DIR$/blindbackup/providers/onlyoffice.py" />
+        <option value="$PROJECT_DIR$/Pipfile" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1920" />
+    <option name="x" value="3008" />
     <option name="y" value="-1" />
-    <option name="width" value="1916" />
+    <option name="width" value="1664" />
     <option name="height" value="2141" />
   </component>
   <component name="ProjectView">
@@ -238,7 +208,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -250,19 +219,6 @@
               <item name="blindbackup" type="b2602c69:ProjectViewProjectNode" />
               <item name="blindbackup" type="47feb1d3:ProjectViewModuleNode" />
               <item name="blindbackup" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="blindbackup" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blindbackup" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="blindbackup" type="462c0819:PsiDirectoryNode" />
-              <item name="blindbackup" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="blindbackup" type="b2602c69:ProjectViewProjectNode" />
-              <item name="blindbackup" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="blindbackup" type="462c0819:PsiDirectoryNode" />
-              <item name="blindbackup" type="462c0819:PsiDirectoryNode" />
-              <item name="providers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="blindbackup" type="b2602c69:ProjectViewProjectNode" />
@@ -280,6 +236,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -314,7 +271,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/bsync.py" />
-      <option name="PARAMETERS" value="-c /data/gandalf/OnlyOffice/client.ini -v &quot;onlyoffice://Felhasználói kézikönyvek&quot; /data/gandalf/OnlyOffice/data -m a" />
+      <option name="PARAMETERS" value="-c /data/gandalf/OnlyOffice/client.ini -v &quot;onlyoffice://&quot; /data/gandalf/OnlyOffice/data -m a" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -392,25 +349,25 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="-1" width="1916" height="2141" extended-state="0" />
+    <frame x="3008" y="-1" width="1664" height="2141" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="DB Browser" weight="0.3298153" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49925485" visible="true" weight="0.19989423" />
-      <window_info id="Structure" order="1" sideWeight="0.5007452" side_tool="true" visible="true" weight="0.19989423" />
-      <window_info anchor="bottom" id="DB Execution Console" />
-      <window_info anchor="bottom" id="Version Control" weight="0.32967034" />
-      <window_info anchor="bottom" id="Python Console" weight="0.32967034" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32967034" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.499001" visible="true" weight="0.15253203" />
+      <window_info id="Structure" order="1" sideWeight="0.500999" side_tool="true" visible="true" weight="0.15253203" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="DB Browser" order="3" weight="0.3298153" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32967034" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.63336664" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3961039" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32967034" />
+      <window_info anchor="bottom" id="DB Execution Console" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32967034" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="11" weight="0.32967034" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -425,19 +382,30 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/blindbackup/providers/onlyoffice.py</url>
-          <line>250</line>
+          <line>262</line>
           <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/blindbackup/syncdir.py</url>
+          <line>494</line>
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="self._folder_folders" language="Python" />
+        <watch expression="srcinfo[2]-dstinfo[2]" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>srcinfo[2]-dstinfo[2]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>self._folder_folders</expression-string>
         <language-id>Python</language-id>
@@ -446,35 +414,14 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/BUILD_BDIST.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup_exe.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tox.ini">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/BUILD_BDIST.txt" />
+    <entry file="file://$PROJECT_DIR$/setup_exe.py" />
+    <entry file="file://$PROJECT_DIR$/setup.py" />
+    <entry file="file://$PROJECT_DIR$/tox.ini" />
     <entry file="file://$PROJECT_DIR$/../tornadostreamform/tornadostreamform/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/blindbackup/post_streamer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="32" lean-forward="true" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-          <folding>
-            <element signature="e#67#76#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/blindbackup/post_streamer.py" />
     <entry file="file://$USER_HOME$/.local/share/virtualenvs/blindbackup-y0yJ2X_h/lib/python3.6/site-packages/tornado/web.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="448">
@@ -590,9 +537,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/error.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/error.log" />
     <entry file="file://$PROJECT_DIR$/blindbackup/cryptfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3083">
@@ -602,13 +547,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blindbackup/providers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="23" lean-forward="true" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/blindbackup/providers.py" />
     <entry file="file://$PROJECT_DIR$/tests/server.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -622,13 +561,6 @@
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Pipfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.local/share/virtualenvs/blindbackup-y0yJ2X_h/lib/python3.6/site-packages/requests/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="886">
@@ -638,11 +570,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/blindbackup/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="611">
-          <caret line="149" column="19" lean-forward="true" selection-start-line="149" selection-start-column="19" selection-end-line="149" selection-end-column="19" />
+        <state relative-caret-position="2698">
+          <caret line="149" column="19" selection-start-line="149" selection-start-column="19" selection-end-line="149" selection-end-column="19" />
           <folding>
             <element signature="e#23#34#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blindbackup/providers/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blindbackup/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="779">
+          <caret line="47" column="23" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -653,52 +602,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blindbackup/providers/__init__.py">
+    <entry file="file://$PROJECT_DIR$/blindbackup/providers/localfs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="4560">
+          <caret line="251" column="32" selection-start-line="251" selection-start-column="32" selection-end-line="251" selection-end-column="32" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#23#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5624">
+          <caret line="319" column="26" selection-start-line="319" selection-start-column="26" selection-end-line="319" selection-end-column="26" />
+          <folding>
+            <element signature="e#23#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/blindbackup/syncdir.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="415" selection-start-line="415" selection-end-line="415" />
+        <state relative-caret-position="668">
+          <caret line="317" column="6" selection-start-line="317" selection-start-column="6" selection-end-line="317" selection-end-column="6" />
           <folding>
             <element signature="e#23#34#0" expanded="true" />
-            <element signature="e#23785#24611#0" />
-            <element signature="e#24106#24174#0" />
-            <element signature="e#24281#24350#0" />
-            <element signature="e#24617#24668#0" />
-            <element signature="e#24880#26452#1" />
-            <element signature="e#26685#26771#0" />
-            <element signature="e#26803#26942#0" />
-            <element signature="e#26974#27113#0" />
-            <element signature="e#27338#28197#1" />
-            <element signature="e#28936#29020#0" />
-            <element signature="e#29086#30289#0" />
-            <element signature="e#29086#29424#1" />
-            <element signature="e#29488#29618#0" />
-            <element signature="e#29538#29618#0" />
-            <element signature="e#29686#29821#0" />
-            <element signature="e#29741#29821#0" />
-            <element signature="e#29889#30013#0" />
-            <element signature="e#29933#30013#0" />
-            <element signature="e#30083#30208#0" />
-            <element signature="e#30128#30208#0" />
-            <element signature="e#30394#30440#0" />
-            <element signature="e#31823#31881#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blindbackup/util.py">
+    <entry file="file://$PROJECT_DIR$/scripts/bsync.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="47" column="23" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="23" />
+        <state relative-caret-position="668">
+          <caret line="415" column="39" selection-start-line="415" selection-start-column="39" selection-end-line="415" selection-end-column="39" />
+          <folding>
+            <element signature="e#23#38#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -714,42 +654,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/blindbackup/providers/onlyoffice.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1026">
-          <caret line="266" selection-start-line="266" selection-end-line="266" />
+        <state relative-caret-position="532">
+          <caret line="160" lean-forward="true" selection-start-line="160" selection-end-line="160" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/bsync.py">
+    <entry file="file://$PROJECT_DIR$/Pipfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="29" column="73" selection-start-line="29" selection-start-column="73" selection-end-line="29" selection-end-column="73" />
-          <folding>
-            <element signature="e#23#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="319" column="26" lean-forward="true" selection-start-line="319" selection-start-column="26" selection-end-line="319" selection-end-column="26" />
-          <folding>
-            <element signature="e#23#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blindbackup/providers/localfs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="817">
-          <caret line="322" column="61" lean-forward="true" selection-start-line="322" selection-start-column="61" selection-end-line="322" selection-end-column="61" />
-          <folding>
-            <element signature="e#23#37#0" expanded="true" />
-            <element signature="e#83#2969#0" />
-          </folding>
+        <state relative-caret-position="342">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>

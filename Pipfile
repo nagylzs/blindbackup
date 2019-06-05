@@ -16,7 +16,6 @@ psutil = "*"
 cffi = "*"
 argon2-cffi = "*"
 requests = "*"
-dateutil = "*"
 python-dateutil = "*"
 
 [requires]
