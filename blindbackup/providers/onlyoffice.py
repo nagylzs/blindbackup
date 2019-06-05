@@ -9,6 +9,7 @@ from ..syncdir import FsProvider
 from ..util import create_tmp_file_for
 
 TIMEOUT = 100.0
+DEBUG = True
 
 
 class FolderInfo:
@@ -67,17 +68,24 @@ class OnlyOfficeProvider(FsProvider):
         self.settings = settings
         self._token_holder = _token_holder or {}
         self.root_folder_id = settings["root_folder_id"]
+        self.tmp_dir = settings.get("tmp_dir", None)
+
         # TODO: save these into a database!
         self._folder_infos: Dict[Tuple[str], FolderInfo] = {(): FolderInfo(self.root_folder_id, "", 0)}
         self._file_infos: Dict[Tuple[str], FileInfo] = {}
         self._folder_folders: Dict[str, List[FolderInfo]] = {}
         self._folder_files: Dict[str, List[FileInfo]] = {}
-        self.tmp_dir = settings.get("tmp_dir", None)
         super().__init__()
 
     def clone(self):
         res = OnlyOfficeProvider(None, False, self.settings, root=self.root)
         res.uid = self.get_uid()
+        # Make sure they share the same cache
+        res._folder_infos = self._folder_infos
+        res._file_infos = self._file_infos
+        res._folder_folders = self._folder_folders
+        res._folder_files = self._folder_files
+
         return res
 
     def drill(self, relpath):
@@ -186,6 +194,8 @@ class OnlyOfficeProvider(FsProvider):
         does not need to be encrypted/decrypted before listing contents.
 
         """
+        if DEBUG:
+            print("LIST", relpath)
         norm_path = self._norm_path(self.root + relpath)
         self._cache_folder_info(norm_path)
         dnames = sorted([folder_info.title for folder_info in self._folder_folders[norm_path]])
