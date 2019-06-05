@@ -157,7 +157,7 @@ class OnlyOfficeProvider(FsProvider):
                     folder_info = FolderInfo(folder_id, title, updated)
                     self._folder_infos[path] = folder_info
                     folder_infos.append(folder_info)
-            self._folder_folders[norm_path] = folder_infos
+            self._folder_folders[norm_path] = sorted(folder_infos, key=lambda fi: fi.title)
 
             files = info["response"]["files"]
             file_infos = []
@@ -171,7 +171,7 @@ class OnlyOfficeProvider(FsProvider):
                 file_info = FileInfo(file_id, title, updated, size, view_url)
                 self._file_infos[path] = file_info
                 file_infos.append(file_info)
-            self._folder_files[norm_path] = file_infos
+            self._folder_files[norm_path] = sorted(_file_infos, key=lambda fi: fi.title)
 
         if norm_path not in self._folder_infos:
             raise KeyError("No such folder: %s" % "/".join(norm_path))
@@ -198,8 +198,8 @@ class OnlyOfficeProvider(FsProvider):
             print("LIST", relpath)
         norm_path = self._norm_path(self.root + relpath)
         self._cache_folder_info(norm_path)
-        dnames = sorted([folder_info.title for folder_info in self._folder_folders[norm_path]])
-        fnames = sorted([file_info.title for file_info in self._folder_files[norm_path]])
+        dnames = [folder_info.title for folder_info in self._folder_folders[norm_path]]
+        fnames = [file_info.title for file_info in self._folder_files[norm_path]]
         return (dnames, fnames)
 
     def getinfo(self, items, encrypted):
@@ -268,7 +268,8 @@ class OnlyOfficeProvider(FsProvider):
             localpath = create_tmp_file_for(self.tmp_dir)
             fout = open(localpath, "wb+")
             try:
-                with requests.get(file_info.view_url, stream=True, headers=self._create_headers(), timeout=TIMEOUT) as r:
+                with requests.get(file_info.view_url, stream=True, headers=self._create_headers(),
+                                  timeout=TIMEOUT) as r:
                     r.raise_for_status()
                     for chunk in r.iter_content(chunk_size=8192):
                         if chunk:  # filter out keep-alive new chunks
