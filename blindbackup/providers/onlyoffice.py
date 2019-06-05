@@ -171,7 +171,7 @@ class OnlyOfficeProvider(FsProvider):
                 file_info = FileInfo(file_id, title, updated, size, view_url)
                 self._file_infos[path] = file_info
                 file_infos.append(file_info)
-            self._folder_files[norm_path] = sorted(_file_infos, key=lambda fi: fi.title)
+            self._folder_files[norm_path] = sorted(file_infos, key=lambda fi: fi.title)
 
         if norm_path not in self._folder_infos:
             raise KeyError("No such folder: %s" % "/".join(norm_path))
