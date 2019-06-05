@@ -8,6 +8,8 @@ from dateutil.parser import parse as parse_ts
 from ..syncdir import FsProvider
 from ..util import create_tmp_file_for
 
+TIMEOUT = 100.0
+
 
 class FolderInfo:
     def __init__(self, folder_id, title, updated):
@@ -99,13 +101,13 @@ class OnlyOfficeProvider(FsProvider):
 
     def _post(self, relpath, data: dict, no_auth=False):
         url = self.settings["server_url"] + "/api/2.0/" + relpath
-        response = requests.post(url, data=data, headers=self._create_headers(no_auth))
+        response = requests.post(url, data=data, headers=self._create_headers(no_auth), timeout=TIMEOUT)
         response.raise_for_status()
         return response.json()
 
     def _get(self, relpath, no_auth=False):
         url = self.settings["server_url"] + "/api/2.0/" + relpath
-        response = requests.get(url, headers=self._create_headers(no_auth))
+        response = requests.get(url, headers=self._create_headers(no_auth), timeout=TIMEOUT)
         response.raise_for_status()
         return response.json()
 
@@ -186,8 +188,8 @@ class OnlyOfficeProvider(FsProvider):
         """
         norm_path = self._norm_path(self.root + relpath)
         self._cache_folder_info(norm_path)
-        dnames = [folder_info.title for folder_info in self._folder_folders[norm_path]]
-        fnames = [file_info.title for file_info in self._folder_files[norm_path]]
+        dnames = sorted([folder_info.title for folder_info in self._folder_folders[norm_path]])
+        fnames = sorted([file_info.title for file_info in self._folder_files[norm_path]])
         return (dnames, fnames)
 
     def getinfo(self, items, encrypted):
@@ -256,7 +258,7 @@ class OnlyOfficeProvider(FsProvider):
             localpath = create_tmp_file_for(self.tmp_dir)
             fout = open(localpath, "wb+")
             try:
-                with requests.get(file_info.view_url, stream=True, headers=self._create_headers()) as r:
+                with requests.get(file_info.view_url, stream=True, headers=self._create_headers(), timeout=TIMEOUT) as r:
                     r.raise_for_status()
                     for chunk in r.iter_content(chunk_size=8192):
                         if chunk:  # filter out keep-alive new chunks
